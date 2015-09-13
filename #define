@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+struct define
+{
+	char pre[20];
+	int val;
+}s[10];
+int main()
+{
+   char def[20],a[20];
+   int i=0,j,f=0;
+   FILE *q,*r;
+   
+   q = fopen("input_def.txt", "r");
+   r = fopen("output_def.txt", "w");
+   printf("Enter define preprocessor directive new name  :  ");
+   scanf("%s",def);
+   while(!feof(q))
+   {
+   		fscanf(q,"%s",a);
+   		if(strcmp(a,def)==0)
+   		{
+   			
+   			fscanf(q,"%s %d",s[i].pre, &s[i].val);
+   			i++;
+   		}
+   }
+   rewind(q);
+   do
+   {
+      fscanf(q,"%s",a );
+      f=0;
+      if(strcmp(a,def)==0)
+      {
+      	fprintf(r,"%s ",a);
+      	fscanf(q,"%s",a );
+      	fprintf(r,"%s ",a);
+      	fscanf(q,"%s",a );
+      	fprintf(r,"%s ",a);
+      	fprintf(r,"\n");
+      }     
+	 else
+	 {
+	 	if(a=="\n")
+	 	fprintf(r,"\n");
+	else{
+	 for(j=0;j<i;j++)
+     {
+       if(strcmp(a,s[j].pre)==0)
+      	{
+      		fprintf(r,"%d ",s[j].val);
+      		f=1;
+      	}      	
+      }
+      if(f==0)
+      fprintf(r,"%s  ",a);	
+    }}
+    //fprintf(r,"\n");
+   }
+   while( !feof(q) );
+   fclose(q);
+   fclose(r);
+   
+   return 0;
+}
