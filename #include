@@ -1,0 +1,47 @@
+//include preprocessor, limitation: Not working for .h header files
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+int main()
+{
+   FILE *q,*r,*p;
+   char f[7],x,a[10],n[20];
+   int i=0;
+   q = fopen("insert.txt", "r");
+   r = fopen("output_incl.txt", "w");
+   while(!feof(q))
+   {
+   		fscanf(q,"%9s",a);
+   		i=0;
+   		if(a=="\n")
+   		fprintf(r,"\n");
+   		else if(strcmp(a,"#include<")==0)
+   		{
+   			x=fgetc(q);
+   			while(x!='>')
+   			{
+   				f[i]=x;
+   				i++;
+   				x=fgetc(q);
+   			}
+   			p=fopen(f,"r");  //opening new txt file
+   			while(!feof(p))
+   			{
+   				fscanf(p,"%s",n );
+   				if(a=="\n")
+   					fprintf(r,"\n");
+      			fprintf(r,"%s ",n);
+      		//	fprintf(r,"\n");
+   			}
+   			fprintf(r,"\n");fprintf(r,"\n");
+   			fclose(p);
+   			//fprintf(r,"\n");
+   		}
+   		else
+   		fprintf(r,"%s ",a);
+   	//	fprintf(r,"\n");
+   }
+   fclose(q);
+   fclose(r);
+   return 0;
+}
