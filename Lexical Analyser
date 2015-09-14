@@ -1,0 +1,163 @@
+//lexical analyzer
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include<string.h>
+
+char spcl_syb[]={'{','}','(',')','[',']','/','+','=','<','>',';',':','%','&','|','^','*','!','?','.',','};
+char *spcl_value[]={"left curly bracket","right curly bracket","left round bracket","right round bracket","left square bracket","right square bracket","back slash",
+					"plus sign","equal sign","less than sign","greater than sign","smicolon","colon","modulus sign","AND sign","OR sign","XOR sign","pointer or mult sign"
+					,"NOT sign","Question mark","dot","comma"};
+
+char *keyword[]={"auto","break","case","char","const","continue","default","do","double","else","extern","enum","float","for","goto","if","int","long","register","return","short","signed","sizeof","static","stuct","switch","typedef","union","unsigned","void","volatile","while"};
+
+struct lexme
+{
+	int line;
+	char type[10];
+	char value[25];
+}table[250];
+
+int is_specialchar(char n);
+int is_keyword(char a[]);
+
+int main()
+{
+   char ch, file_name[25],x,*type[10], number[10];
+   FILE *fp,*q;
+   int line_no=1,i=0,y;
+   
+   printf("Enter the name of file for which you want to see lexical analyser table\n");
+   gets(file_name);
+ 
+   fp = fopen(file_name,"r"); // read mode
+   q = fopen("output_lexme.txt", "w");
+   if( fp == NULL )
+   {
+      perror("\nError while opening the file.\n");
+      exit(EXIT_FAILURE);
+   }
+ 
+   printf("\nThe contents of %s file are :\n", file_name);
+ 
+   while( ( ch = fgetc(fp) ) != EOF )
+      printf("%c",ch);
+ 	
+	 rewind(fp);
+ 	while( ( ch = fgetc(fp) ) != EOF )
+	 {
+	 	 //printf("%c",ch);
+	 	if(ch==' '|| ch=='\t'||ch=='\b');
+	                   //do nothing if white space
+	 	else if(ch=='\n')                      // line number count
+	 	{
+	 		line_no++;
+	 	}
+	 	else if(ch=='-') 	//comments of type --acudhu%cwd
+	 	{
+	 		x=fgetc(fp);
+	 		if(x=='-')
+	 		{
+	 			while(ch!='\n')
+	 			ch=fgetc(fp);
+	 		}
+	 		else
+	 		{
+	 			table[1].type[0]=ch;
+				strcpy(table[i].value,"minus sign")	 ;			
+	 			ch=x;
+	 			table[i].line=line_no;
+	 			i++;
+	 		}
+	 	}
+	 	else if(isdigit(ch))
+	 	{
+	 		number[0]=ch;
+	 		int k=1;
+	 		ch=fgetc(fp);
+	 		while(isdigit(ch))
+	 		{
+	 			number[k++]=ch;
+	 			ch=fgetc(fp);
+	 		}
+	 		fseek(fp,-1,SEEK_CUR);
+	 		strcpy(table[i].type,number)	 ;
+	 		strcpy(table[i].value,"number")	;
+	 		table[i].line=line_no;
+	 		i++;
+	 	}
+	 	else if(isalpha(ch))
+	 	{
+	 		int k=1;
+	 		char key[10]="";
+	 		key[0]=ch;
+	 		ch=fgetc(fp);
+	 		while(isalpha(ch))
+	 		{
+	 			key[k++]=ch;
+	 			ch=fgetc(fp);
+	 			
+	 		}
+	 		fseek(fp,-1,SEEK_CUR);
+	 		if(k==1)
+	 		{
+	 			table[i].type[0]=key[0];
+	 			strcpy(table[i].value,"id")	 ;
+	 			table[i].line=line_no;
+	 			i++;
+	 		}
+	 		else if((is_keyword(key)))
+		 	{
+				strcpy(table[i].type,key);
+				strupr(key);
+				strcpy(table[i].value,key);
+				table[i].line=line_no;
+				i++;
+		 		}
+	 	}
+		else if((y=is_specialchar(ch))!=-1)
+		{
+			table[i].type[0]=ch;
+			strcpy(table[i].value,spcl_value[y]);
+			table[i].line=line_no;
+			i++;
+		}
+	 	
+	 	
+	 }
+	 
+	 //output
+	 printf("\n\nLine _ no \tType \t\t Value\n");
+	 y=i-1;
+	 for(i=0;i<=y;i++)	
+	 {
+	 	printf("%d\t\t %s\t\t %s\n",table[i].line,table[i].type,table[i].value);
+	 }
+ 	
+   fclose(fp);
+   return 0;
+}
+
+int is_specialchar(char n)
+{
+	int i;
+	for(i=0;i<22;i++)
+	{
+		if(spcl_syb[i]==n)
+			return i;
+	}
+	return -1;
+}
+
+int is_keyword(char a[])
+{
+	int i;
+	for(i=0;i<=31;i++)
+	{
+		if((strcmp(keyword[i],a))==0)
+		{
+			return 1;
+		}
+	}
+	return 0;	
+}
