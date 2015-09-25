@@ -1,0 +1,86 @@
+Given code
+#include <stdio.h>
+int main()
+{
+	int a=3;
+	int *p=&a;
+	float b=4.6;
+	printf("%d %f",a,b);
+	printf("%d",*p);
+	printf("%f",*p);
+    return 0;
+}
+
+Step1: Preprocessing
+code of stdio.h
+int main()
+{
+	int a=3;
+	int *p=&a;
+	float b=4.6;
+	printf("%d %f",a,b);
+	printf("%d",*p);
+	printf("%f",*p);
+    return 0;
+}
+
+Step2:Lexical Analysis
+
+ Line no.       Type            Value
+ 1		 int		 INT
+ 1		 (		 left round bracket
+ 1		 )		 right round bracket
+ 2		 {		 left curly bracket
+ 3		 int		 INT
+ 3		 a		 id
+ 3		 =		 equal sign
+ 3		 3		 number
+ 3		 ;		 smicolon
+ 4		 int		 INT
+ 4		 *		 pointer or mult sign
+ 4		 p		 id
+ 4		 =		 equal sign
+ 4		 &		 AND sign
+ 4		 a		 id
+ 4		 ;		 smicolon
+ 5		 float		 FLOAT
+ 5		 b		 id
+ 5		 =		 equal sign
+ 5		 4		 number
+ 5		 .		 dot
+ 5		 6		 number
+ 5		 ;		 smicolon
+ 6		 (		 left round bracket
+ 6		 %		 modulus sign
+ 6		 d		 id
+ 6		 %		 modulus sign
+ 6		 f		 id
+ 6		 ,		 comma
+ 6		 a		 id
+ 6		 ,		 comma
+ 6		 b		 id
+ 6		 )		 right round bracket
+ 6		 ;		 smicolon
+ 7		 (		 left round bracket
+ 7		 %		 modulus sign
+ 7		 d		 id
+ 7		 ,		 comma
+ 7		 *		 pointer or mult sign
+ 7		 p		 id
+ 7		 )		 right round bracket
+ 7		 ;		 smicolon
+ 8		 (		 left round bracket
+ 8		 %		 modulus sign
+ 8		 f		 id
+ 8		 ,		 comma
+ 8		 *		 pointer or mult sign
+ 8		 p		 id
+ 8		 )		 right round bracket
+ 8		 ;		 smicolon
+ 9		 return		 RETURN
+ 9		 0		 number
+ 9		 ;		 smicolon
+ 10		 }		 right curly bracket
+
+ 
+ Step 4: 
