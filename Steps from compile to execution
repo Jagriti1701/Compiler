@@ -83,4 +83,17 @@ Step2:Lexical Analysis
  10		 }		 right curly bracket
 
  
- Step 4: 
+ Step 4: error checking using PDA (made using table)
+ If error found..it'll show message to user and after correction it'll again repeat the same process
+ 
+ Step 5: After syntax checking, it'll convert given code to assembly language
+ 
+ Step 6: Now machine can't understand assembly language, so assembler wiil convert assembly lang to object code file.
+ 
+ Step 7: Linker will link all library file to object code
+ 
+ Step 8: Loader will ..convert all object files into one exe file
+ 
+ Step 9: Display result
+ 
+ 
